@@ -24,6 +24,10 @@ export const unlink: (path: string) => Promise<void>;
 export const rename: (path: string, newPath: string) => Promise<void>;
 export const stat: (path: string) => Promise<FileInfo>;
 export const exists: (path: string) => Promise<boolean>;
+export const readDir: (path: string) => Promise<FileInfo[]>;
+export const mkdir: (path: string) => Promise<void>;
+export const moveFile: (path: string, newPath: string) => Promise<void>;
+export const copyFile: (path: string, newPath: string) => Promise<void>;
 
 export type DownloadFileOptions = {
   fromUrl: string;
