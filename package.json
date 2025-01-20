@@ -7,7 +7,7 @@
   "repository": "https://github.com/mybigday/native-universal-fs.git",
   "author": "Hans <hans.chen@bricks.tools>",
   "license": "MIT",
-  "optionalDependencies": {
+  "peerDependencies": {
     "@dr.pogodin/react-native-fs": "*",
     "expo-file-system": "*",
     "react-native-fs": "*"
