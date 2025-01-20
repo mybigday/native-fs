@@ -1,6 +1,6 @@
 {
   "name": "native-universal-fs",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Universal FS interface for React Native or Expo",
   "main": "index.js",
   "types": "index.d.ts",
