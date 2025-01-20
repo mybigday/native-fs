@@ -1,6 +1,6 @@
-let fs;
+let fs = {};
 let isExpo = false;
-const isLoaded = () => fs && (fs.documentDirectory || fs.DocumentDirectoryPath);
+const isLoaded = () => fs.documentDirectory || fs.DocumentDirectoryPath;
 
 if (typeof navigator !== "undefined" && navigator.product === "ReactNative") {
   try {
@@ -23,9 +23,9 @@ const join = (...paths) => paths.join("/").replace("//", "/");
 const normalize = (path) => isExpo && path.startsWith("/") ? `file://${path}` : path;
 const basename = (path) => path.split("/").pop();
 
-export const TemporaryDirectoryPath = isExpo ? fs.cacheDirectory : fs.TemporaryDirectoryPath;
-export const DocumentDirectoryPath = isExpo ? fs.documentDirectory : fs.DocumentDirectoryPath;
-export const CachesDirectoryPath = isExpo ? fs.cacheDirectory : fs.CachesDirectoryPath;
+const TemporaryDirectoryPath = isExpo ? fs.cacheDirectory : fs.TemporaryDirectoryPath;
+const DocumentDirectoryPath = isExpo ? fs.documentDirectory : fs.DocumentDirectoryPath;
+const CachesDirectoryPath = isExpo ? fs.cacheDirectory : fs.CachesDirectoryPath;
 
 if (!isLoaded()) {
   fs = new Proxy({}, {
@@ -37,42 +37,42 @@ if (!isLoaded()) {
 
 // Basic file operations
 
-export const readFile = (path, encoding = "utf8") => {
+const readFile = (path, encoding = "utf8") => {
   if (isExpo) {
     return fs.readAsStringAsync(normalize(path), { encoding });
   }
   return fs.readFile(path, encoding);
 };
 
-export const writeFile = (path, data, encoding = "utf8") => {
+const writeFile = (path, data, encoding = "utf8") => {
   if (isExpo) {
     return fs.writeAsStringAsync(normalize(path), data, { encoding });
   }
   return fs.writeFile(path, data, encoding);
 };
 
-export const appendFile = (path, data, encoding = "utf8") => {
+const appendFile = (path, data, encoding = "utf8") => {
   if (isExpo) {
     throw new Error("`appendFile` not supported on Expo");
   }
   return fs.appendFile(path, data, encoding);
 };
 
-export const write = (path, data, position = 0, encoding = "utf8") => {
+const write = (path, data, position = 0, encoding = "utf8") => {
   if (isExpo) {
     throw new Error("`write` not supported on Expo");
   }
   return fs.write(path, data, position, encoding);
 };
 
-export const readdir = (path) => {
+const readdir = (path) => {
   if (isExpo) {
     return fs.readDirectoryAsync(normalize(path));
   }
   return fs.readdir(path);
 };
 
-export const readDir = async (path) => {
+const readDir = async (path) => {
   if (isExpo) {
     const files = await fs.readDirectoryAsync((item) => normalize(join(path, item)));
     return Promise.all(files.map(stat));
@@ -80,35 +80,35 @@ export const readDir = async (path) => {
   return fs.readDir(path);
 };
 
-export const mkdir = (path) => {
+const mkdir = (path) => {
   if (isExpo) {
     return fs.makeDirectoryAsync(normalize(path), { intermediates: true });
   }
   return fs.mkdir(path);
 };
 
-export const unlink = (path) => {
+const unlink = (path) => {
   if (isExpo) {
     return fs.deleteAsync(normalize(path));
   }
   return fs.unlink(path);
 };
 
-export const moveFile = (path, newPath) => {
+const moveFile = (path, newPath) => {
   if (isExpo) {
     return fs.moveAsync({ from: normalize(path), to: normalize(newPath) });
   }
   return fs.moveFile(path, newPath);
 };
 
-export const copyFile = (path, newPath) => {
+const copyFile = (path, newPath) => {
   if (isExpo) {
     return fs.copyAsync({ from: normalize(path), to: normalize(newPath) });
   }
   return fs.copyFile(path, newPath);
 };
 
-export const stat = async (path) => {
+const stat = async (path) => {
   if (isExpo) {
     const { exists, isDirectory, modificationTime, size, uri } = await fs.getInfoAsync(normalize(path));
     if (!exists) {
@@ -127,7 +127,7 @@ export const stat = async (path) => {
   return fs.stat(path);
 };
 
-export const exists = async (path) => {
+const exists = async (path) => {
   if (isExpo) {
     const info = await fs.getInfoAsync(normalize(path));
     return info.exists;
@@ -140,7 +140,7 @@ export const exists = async (path) => {
 const jobs = {};
 let nextJobId = 0;
 
-export const downloadFile = (options) => {
+const downloadFile = (options) => {
   if (isExpo) {
     let bytesWritten = 0;
     let contentLength = 0;
@@ -181,7 +181,7 @@ export const downloadFile = (options) => {
   return fs.downloadFile(options);
 };
 
-export const stopDownload = async (jobId) => {
+const stopDownload = async (jobId) => {
   if (isExpo) {
     const job = jobs[jobId];
     if (!job) {
@@ -193,7 +193,7 @@ export const stopDownload = async (jobId) => {
   return fs.stopDownload(jobId);
 };
 
-export const uploadFiles = (options) => {
+const uploadFiles = (options) => {
   if (isExpo) {
     const {
       toUrl,
@@ -239,7 +239,7 @@ export const uploadFiles = (options) => {
   return fs.uploadFiles(options);
 };
 
-export const stopUpload = async (jobId) => {
+const stopUpload = async (jobId) => {
   if (isExpo) {
     const job = jobs[jobId];
     if (!job) {
@@ -251,7 +251,7 @@ export const stopUpload = async (jobId) => {
   return fs.stopUpload(jobId);
 };
 
-export default {
+module.exports = {
   DocumentDirectoryPath,
   CachesDirectoryPath,
   TemporaryDirectoryPath,
