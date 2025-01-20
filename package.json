@@ -1,15 +1,19 @@
 {
-  "name": "native-fs",
+  "name": "native-universal-fs",
   "version": "0.1.0",
-  "description": "Unified FS interface for React Native or Expo",
+  "description": "Universal FS interface for React Native or Expo",
   "main": "index.js",
   "types": "index.d.ts",
-  "repository": "https://github.com/mybigday/native-fs.git",
+  "repository": "https://github.com/mybigday/native-universal-fs.git",
   "author": "Hans <hans.chen@bricks.tools>",
   "license": "MIT",
   "optionalDependencies": {
     "@dr.pogodin/react-native-fs": "*",
     "react-native-fs": "*",
     "expo-file-system": "*"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   }
 }

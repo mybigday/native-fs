@@ -1,14 +1,14 @@
-native-fs
+native-universal-fs
 ===
 
-A unified file system for React Native or Expo.
+A universal file system for React Native or Expo.
 
 Will auto select the native module which is available.
 
 ## Installation
 
 ```bash
-npm install native-fs
+npm install native-universal-fs
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ npm install native-fs
 Use module like `react-native-fs`.
 
 ```js
-import fs from 'native-fs';
+import fs from 'native-universal-fs';
 
 fs.readFile('path/to/file.txt', 'utf8').then((data) => {
   console.log(data);
